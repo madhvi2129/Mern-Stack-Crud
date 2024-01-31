@@ -3,49 +3,39 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    // Fetch data when the component mounts
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/GetUsers');
-        const result = await response.json();
-
-        if (result.success) {
-          // Update the state with the fetched data
-          setUsers(result.getallusers);
-        } else {
-          console.error('Failed to fetch data');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
-
-  const handleDelete = async (userId) => {
-    try {
-      const response = await fetch(`http://localhost:5000/DeleteUser/${userId}`, {
-        method: 'DELETE',
-      });
+// fteching all the articles
+useEffect(()=>{
+  const fetch =async()=>{
+    try{
+      const response = await fetch('aPI');
       const result = await response.json();
-
-      if (result.success) {
-        console.log(`User with ID ${userId} deleted successfully`);
-        // Refetch the updated data
-        const updatedData = await fetch('http://localhost:5000/GetUsers');
-        const updatedResult = await updatedData.json();
-        setUsers(updatedResult.getallusers);
-      } else {
-        console.error('Failed to delete user');
+      if(result.success){
+        setUsers(result.getallUsers);
+      }else{
+        console.log("error in fetching the data");
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
+      }catch(error){
+        console.log("error in fetching the data");
+    }
+  }
+})
+const handleDelete = async(userId)=>{
+ 
+  try{
+    const response = await fetch("API", {
+      method:'DELETE,'
+    });
+    method:"delete"
+    const result= await response.json();
+    if(response.success){
+      const updatedData = await fetch("fetching all");
+      const updatedresult = await updatedData.json();
+    }
+  }catch{
+console.log("User not deleted d=successfully")
+  }
+}
   return (
     <div className='p-8'>
       <center>
